@@ -1,0 +1,577 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Catatan pembelajaran Lendra tentang GitHub, kendala commit dan push, serta pengalaman di Laboratorium TKJ.">
+
+    <title>CV-ONLINE | Learning Journal</title>
+
+    <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #f5f6f8;
+            --white: #ffffff;
+            --dark: #18212e;
+            --text: #202a38;
+            --muted: #737f8e;
+            --border: #e5e9ef;
+            --accent: #4775aa;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .container {
+            width: min(1050px, calc(100% - 40px));
+            margin: auto;
+        }
+
+        /* NAVBAR */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav {
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .brand span {
+            color: var(--accent);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            color: var(--muted);
+            font-weight: bold;
+        }
+
+        /* HERO */
+        .hero {
+            margin-top: 40px;
+            padding: 60px;
+            background: var(--dark);
+            color: var(--white);
+            border-radius: 8px;
+        }
+
+        .eyebrow {
+            color: #a9c0dd;
+            font-size: 11px;
+            letter-spacing: 2px;
+            font-weight: bold;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            max-width: 700px;
+            font-size: clamp(36px, 6vw, 58px);
+            line-height: 1.15;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            color: #9bbce3;
+        }
+
+        .hero p {
+            max-width: 580px;
+            color: #c0cad6;
+            font-size: 14px;
+            margin-top: 22px;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+            color: #b6c3d2;
+            font-size: 11px;
+        }
+
+        /* MAIN */
+        main {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 260px;
+            gap: 55px;
+            padding-top: 65px;
+            padding-bottom: 70px;
+        }
+
+        .section {
+            margin-bottom: 55px;
+        }
+
+        .section-label {
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 1.8px;
+            margin-bottom: 13px;
+        }
+
+        h2 {
+            font-size: 26px;
+            letter-spacing: -0.7px;
+            line-height: 1.4;
+            margin-bottom: 18px;
+        }
+
+        .section > p {
+            color: #657181;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        strong {
+            color: #293e58;
+        }
+
+        /* CHALLENGES */
+        .challenge {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            padding: 25px;
+            margin-bottom: 15px;
+            transition: 0.2s;
+        }
+
+        .challenge:hover {
+            border-color: #a9bfd9;
+            transform: translateY(-2px);
+        }
+
+        .challenge-number {
+            color: var(--accent);
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+        }
+
+        .challenge h3 {
+            font-size: 17px;
+            margin: 9px 0 12px;
+        }
+
+        .challenge p {
+            font-size: 13px;
+            color: #697585;
+            margin-bottom: 12px;
+        }
+
+        .challenge p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* REFLECTION */
+        .reflection {
+            background: #eaf0f7;
+            border-left: 3px solid var(--accent);
+            padding: 25px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .reflection p {
+            font-size: 13px;
+            color: #53647a;
+            margin-bottom: 13px;
+        }
+
+        .reflection p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* SIDEBAR */
+        aside {
+            align-self: start;
+            position: sticky;
+            top: 25px;
+        }
+
+        .sidebar-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            padding: 23px;
+            margin-bottom: 17px;
+        }
+
+        .sidebar-title {
+            font-size: 10px;
+            font-weight: bold;
+            letter-spacing: 1.3px;
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .info {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .info span {
+            display: block;
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        .info strong {
+            display: block;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .sidebar-note {
+            background: #eaf0f7;
+            border-radius: 7px;
+            padding: 23px;
+        }
+
+        .sidebar-note p {
+            font-size: 13px;
+            color: #53647a;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--white);
+            border-top: 1px solid var(--border);
+            padding: 25px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 800px) {
+            main {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            aside {
+                position: static;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .container {
+                width: calc(100% - 30px);
+            }
+
+            .nav-label {
+                font-size: 8px;
+            }
+
+            .hero {
+                margin-top: 22px;
+                padding: 35px 24px;
+            }
+
+            .hero h1 {
+                font-size: 37px;
+                letter-spacing: -1px;
+            }
+
+            .hero-meta {
+                gap: 9px;
+            }
+
+            main {
+                padding-top: 42px;
+                padding-bottom: 45px;
+            }
+
+            h2 {
+                font-size: 23px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <header>
+        <nav class="container">
+            <div class="brand">LENDRA KECE<span></span></div>
+            <div class="nav-label">PERSONAL LEARNING JOURNAL</div>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="container hero">
+
+        <div class="eyebrow">FIELD NOTES / 001</div>
+
+        <h1>
+            Learning Through
+            <span>Technical Challenges.</span>
+        </h1>
+
+        <p>
+            Catatan perjalanan belajar memahami GitHub,
+            menghadapi kendala teknis, dan mengenal proses
+            pengelolaan kode dalam pengembangan website.
+        </p>
+
+        <div class="hero-meta">
+            <span>21 November 2026</span>
+            <span>/</span>
+            <span>Web Development</span>
+            <span>/</span>
+            <span>Learning Journal</span>
+        </div>
+
+    </section>
+
+    <!-- CONTENT -->
+    <main class="container">
+
+        <article>
+
+            <!-- EXPERIENCE -->
+            <section class="section">
+
+                <div class="section-label">
+                    01 — THE EXPERIENCE
+                </div>
+
+                <h2>
+                    Belajar GitHub Tidak Selalu Berjalan Mulus
+                </h2>
+
+                <p>
+                    Hari ini, Sabtu, 21 November 2026, saya bersama
+                    tim IT dan pembina ekstrakurikuler IT, Pak Zull,
+                    mencoba melakukan proses <strong>commit</strong>
+                    dan <strong>push</strong> dari Visual Studio Code
+                    ke GitHub. Namun, percobaan tersebut belum
+                    berhasil karena beberapa kendala yang kami
+                    temui selama proses berlangsung.
+                </p>
+
+                <p>
+                    Terdapat dua kendala utama yang menjadi catatan
+                    pembelajaran hari ini. Kendala pertama berkaitan
+                    dengan kondisi komputer Laboratorium TKJ,
+                    sedangkan kendala kedua terjadi ketika mencoba
+                    melakukan pendaftaran akun GitHub.
+                </p>
+
+            </section>
+
+            <!-- CHALLENGES -->
+            <section class="section">
+
+                <div class="section-label">
+                    02 — TECHNICAL CHALLENGES
+                </div>
+
+                <h2>Kendala yang Ditemukan</h2>
+
+                <div class="challenge">
+
+                    <div class="challenge-number">
+                        ISSUE 01 / LABORATORY
+                    </div>
+
+                    <h3>
+                        Aplikasi Hilang Setelah Komputer Restart
+                    </h3>
+
+                    <p>
+                        Pada komputer Laboratorium TKJ, aplikasi
+                        desktop yang diinstal, seperti Adobe Premiere
+                        dan aplikasi lainnya, berhasil terpasang
+                        bahkan dapat digunakan seperti biasa.
+                        Namun, setelah komputer direstart, aplikasi
+                        yang sebelumnya diinstal tersebut kembali
+                        hilang.
+                    </p>
+
+                    <p>
+                        Kondisi ini menjadi kendala karena aplikasi
+                        yang dibutuhkan untuk kegiatan praktik
+                        tidak dapat dipertahankan setelah komputer
+                        dinyalakan ulang.
+                    </p>
+
+                </div>
+
+                <div class="challenge">
+
+                    <div class="challenge-number">
+                        ISSUE 02 / GITHUB ACCOUNT
+                    </div>
+
+                    <h3>
+                        Kendala Saat Mendaftar Akun GitHub
+                    </h3>
+
+                    <p>
+                        Kendala lainnya muncul pada tahap awal
+                        pendaftaran akun GitHub. Beberapa percobaan
+                        pendaftaran mengalami kegagalan ketika
+                        dilakukan berulang kali menggunakan IP
+                        yang sama.
+                    </p>
+
+                    <p>
+                        Saat mencoba mendaftar, saya melakukan
+                        klik tombol berulang kali dengan jeda
+                        sekitar tiga detik. Proses tersebut tidak
+                        berjalan sesuai harapan sehingga pendaftaran
+                        akun menjadi salah satu kendala yang perlu
+                        diperhatikan.
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- REFLECTION -->
+            <section class="section">
+
+                <div class="section-label">
+                    03 — PERSONAL REFLECTION
+                </div>
+
+                <h2>Catatan Pembelajaran Hari Ini</h2>
+
+                <div class="reflection">
+
+                    <p>
+                        Pengalaman hari ini memberikan saya
+                        pemahaman bahwa proses belajar teknologi
+                        tidak selalu berjalan sesuai rencana.
+                        Ada kendala yang muncul bahkan sebelum
+                        proses utama berhasil dilakukan.
+                    </p>
+
+                    <p>
+                        Meskipun percobaan commit dan push dari
+                        Visual Studio Code ke GitHub belum berhasil,
+                        saya mendapatkan pengalaman mengenai
+                        beberapa hal teknis yang perlu dipahami,
+                        mulai dari kondisi komputer laboratorium
+                        hingga proses pembuatan akun GitHub.
+                    </p>
+
+                    <p>
+                        Saya ingin menjadikan pengalaman ini
+                        sebagai bagian dari dokumentasi belajar,
+                        sehingga setiap kendala, percobaan,
+                        dan perkembangan project dapat tercatat
+                        dengan baik di repository GitHub.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </article>
+
+        <!-- SIDEBAR -->
+        <aside>
+
+            <div class="sidebar-card">
+
+                <div class="sidebar-title">
+                    JOURNAL INFORMATION
+                </div>
+
+                <div class="info">
+                    <span>Author</span>
+                    <strong>Lendra</strong>
+                </div>
+
+                <div class="info">
+                    <span>Date</span>
+                    <strong>21 November 2026</strong>
+                </div>
+
+                <div class="info">
+                    <span>Category</span>
+                    <strong>Web Development</strong>
+                </div>
+
+                <div class="info">
+                    <span>Topic</span>
+                    <strong>GitHub & Troubleshooting</strong>
+                </div>
+
+                <div class="info">
+                    <span>Entry</span>
+                    <strong>#001</strong>
+                </div>
+
+            </div>
+
+            <div class="sidebar-note">
+
+                <div class="sidebar-title">
+                    TODAY'S TAKEAWAY
+                </div>
+
+                <p>
+                    Mencatat kendala adalah bagian dari memahami
+                    proses. Tidak semua percobaan harus berhasil
+                    untuk menjadi pelajaran.
+                </p>
+
+            </div>
+
+        </aside>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-content">
+            <span>© 2026 CV-ONLINE / Lendra</span>
+            <span>Learning in Progress.</span>
+        </div>
+    </footer>
+
+</body>
+</html>
